@@ -44,22 +44,4 @@ class ProductController extends Controller
         }
         return response()->json($output);
     }
-
-    public function deleteProduct($id)
-    {
-        $output = [];
-        $output['success'] = false;
-        try {
-            DB::table('products')
-                ->where('id', $id)
-                ->update([
-                    'deleted_at' => Carbon::now()
-                ]);
-
-            $output['success'] = true;
-        } catch (\Exception $e) {
-            $output['error'] = $e->getMessage();
-        }
-        return response()->json($output);
-    }
 }

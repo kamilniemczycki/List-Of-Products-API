@@ -25,6 +25,5 @@ Route::post('/lists', [ListController::class, 'createList'])->name('createList')
 Route::get('/list/{id}', [ListController::class, 'listDetails'])->name('listDetails');
 Route::post('/list/{id}', [ListController::class, 'editList'])->name('editList');
 Route::delete('/list/{id}', [ListController::class, 'deleteList'])->name('deleteList');
-Route::get('/products ', [ProductController::class, 'getProducts'])->name('getProducts');
-Route::get('/product/{id} ', [ProductController::class, 'getDetails'])->name('productDetails');
-Route::delete('/product/{id} ', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+Route::get('/products', [ProductController::class, 'getProducts'])->name('getProducts');
+Route::get('/product/{id}', [ProductController::class, 'getDetails'])->name('productDetails');
