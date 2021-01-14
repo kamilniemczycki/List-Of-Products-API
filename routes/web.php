@@ -29,3 +29,4 @@ Route::delete('/list/{id}', [ListController::class, 'deleteList'])->name('delete
 Route::get('/products', [ProductController::class, 'getProducts'])->name('getProducts');
 Route::get('/product/{id}', [ProductController::class, 'getDetails'])->name('productDetails');
 Route::get('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'getDetails'])->name('getDetails');
+Route::put('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'addProductToList'])->name('addProductToList');
