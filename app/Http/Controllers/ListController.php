@@ -84,10 +84,30 @@ class ListController extends Controller
             $output['products'] = DB::table('products')
                 ->join('products_to_lists', 'products_to_lists.product_id', '=', 'products.id')
                 ->join('lists', 'products_to_lists.list_id', '=', 'lists.id')
-                ->select('id', 'name','description','image_url','price', 'is_done as done')
+                ->select('id', 'name', 'description', 'image_url', 'price', 'is_done as done')
                 ->whereNotNull('products_to_lists.deleted_at')
                 ->whereNotNull('products.deleted_at')
                 ->get();
+
+            $output['success'] = true;
+        } catch (\Exception $e) {
+            $output['error'] = $e->getMessage();
+        }
+        return response()->json($output);
+    }
+
+    public function editList(Request $request, $id)
+    {
+        $this->checkPermissions($id);
+        $output = [];
+        $output['success'] = false;
+        try {
+            DB::table('lists')
+                ->where('id', $id)
+                ->update([
+                    'name' => $request->input('name'),
+                    'description' => $request->input('description')
+                ]);
 
             $output['success'] = true;
         } catch (\Exception $e) {
