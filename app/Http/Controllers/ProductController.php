@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -36,6 +37,24 @@ class ProductController extends Controller
                 ->whereNull('deleted_at')
                 ->where('id', $id)
                 ->first();
+
+            $output['success'] = true;
+        } catch (\Exception $e) {
+            $output['error'] = $e->getMessage();
+        }
+        return response()->json($output);
+    }
+
+    public function deleteProduct($id)
+    {
+        $output = [];
+        $output['success'] = false;
+        try {
+            DB::table('products')
+                ->where('id', $id)
+                ->update([
+                    'deleted_at' => Carbon::now()
+                ]);
 
             $output['success'] = true;
         } catch (\Exception $e) {
