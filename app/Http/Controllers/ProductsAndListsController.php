@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -113,6 +114,36 @@ class ProductsAndListsController extends Controller
                     'is_done' => $request->input('done')
                 ]);
 
+            $output['success'] = true;
+        } catch (\Exception $e) {
+            $output['error'] = $e->getMessage();
+        }
+        return response()->json($output);
+    }
+
+    public function removeProductFromList($listId, $productId)
+    {
+        $this->checkPermissions($listId);
+        $output = [];
+        $output['success'] = false;
+        try {
+            $id = DB::table('users_to_lists')
+                ->join('lists', 'lists.id', '=', 'users_to_lists.list_id')
+                ->join('products_to_lists', 'lists.id', '=', 'products_to_lists.list_id')
+                ->where('users_to_lists.user_id', Auth::id())
+                ->where('users_to_lists.list_id', $listId)
+                ->where('products_to_lists.product_id', $productId)
+                ->whereNull('users_to_lists.deleted_at')
+                ->whereNull('products_to_lists.deleted_at')
+                ->select('products_to_lists.id as id')
+                ->first();
+
+
+            DB::table('products_to_lists')
+                ->where('id', $id->id)
+                ->update([
+                    'deleted_at' => Carbon::now()
+                ]);
             $output['success'] = true;
         } catch (\Exception $e) {
             $output['error'] = $e->getMessage();

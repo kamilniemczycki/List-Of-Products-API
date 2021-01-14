@@ -31,3 +31,4 @@ Route::get('/product/{id}', [ProductController::class, 'getDetails'])->name('pro
 Route::get('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'getDetails'])->name('getDetails');
 Route::put('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'addProductToList'])->name('addProductToList');
 Route::post('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'editProductOnList'])->name('editProductOnList');
+Route::delete('/list/{listId}/product/{productId}', [ProductsAndListsController::class, 'removeProductFromList'])->name('removeProductFromList');
