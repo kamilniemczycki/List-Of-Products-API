@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -107,6 +108,25 @@ class ListController extends Controller
                 ->update([
                     'name' => $request->input('name'),
                     'description' => $request->input('description')
+                ]);
+
+            $output['success'] = true;
+        } catch (\Exception $e) {
+            $output['error'] = $e->getMessage();
+        }
+        return response()->json($output);
+    }
+
+    public function deleteList($id)
+    {
+        $this->checkPermissions($id);
+        $output = [];
+        $output['success'] = false;
+        try {
+            DB::table('lists')
+                ->where('id', $id)
+                ->update([
+                    'deleted_at' => Carbon::now()
                 ]);
 
             $output['success'] = true;

@@ -23,3 +23,4 @@ Route::get('/lists', [ListController::class, 'getLists'])->name('login');
 Route::post('/lists', [ListController::class, 'createList'])->name('login');
 Route::get('/list/{id}', [ListController::class, 'listDetails'])->name('login');
 Route::post('/list/{id}', [ListController::class, 'editList'])->name('login');
+Route::delete('/list/{id}', [ListController::class, 'deleteList'])->name('login');
