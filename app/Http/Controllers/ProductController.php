@@ -25,4 +25,22 @@ class ProductController extends Controller
         }
         return response()->json($output);
     }
+
+    public function getDetails($id)
+    {
+        $output = [];
+        $output['success'] = false;
+        try {
+            $output['product'] = DB::table('products')
+                ->select('name', 'description', 'image_url', 'price')
+                ->whereNull('deleted_at')
+                ->where('id', $id)
+                ->first();
+
+            $output['success'] = true;
+        } catch (\Exception $e) {
+            $output['error'] = $e->getMessage();
+        }
+        return response()->json($output);
+    }
 }
