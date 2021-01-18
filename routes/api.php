@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\UserController;
 */
 
 Route::middleware('auth:api')->group(function(){
-    Route::get('/user', [UserController::class])->name('user');
+    Route::get('/user', [UserController::class, 'user'])->name('user');
 
     Route::name('lists.')->group(function() {
         Route::get('/lists', [ListController::class, 'getLists'])->name('getLists');
