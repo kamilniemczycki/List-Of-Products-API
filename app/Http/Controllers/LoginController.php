@@ -31,7 +31,10 @@ class LoginController extends Controller
         }
 
         return response()->json([
-            'message' => 'Incorrect login details.'
+            'message' => 'Incorrect login details.',
+            'errors' => (object)[
+                'password' => ['The selected password is invalid']
+            ]
         ], 422);
     }
 }
