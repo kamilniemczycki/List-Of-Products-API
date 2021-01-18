@@ -32,6 +32,6 @@ class LoginController extends Controller
 
         return response()->json([
             'message' => 'Incorrect login details.'
-        ]);
+        ], 422);
     }
 }
