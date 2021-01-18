@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,7 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::middleware('auth:api')->group(function(){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    })->name('user');
+    Route::get('/user', [UserController::class])->name('user');
 
     Route::name('lists.')->group(function() {
         Route::get('/lists', [ListController::class, 'getLists'])->name('getLists');
